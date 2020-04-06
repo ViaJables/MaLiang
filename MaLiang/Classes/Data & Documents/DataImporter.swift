@@ -18,18 +18,18 @@ open class DataImporter {
     ///   - canvas: canvas to draw data on
     /// - Attention: make sure that all brushes needed are finished seting up before reloading data
     public static func importData(from directory: URL, to canvas: Canvas, progress: ProgressHandler? = nil, result: ResultHandler? = nil) {
-        DispatchQueue(label: "com.maliang.importing").async {
+        //DispatchQueue(label: "com.maliang.importing").async {
             do {
                 try self.importDataSynchronously(from: directory, to: canvas, progress: progress)
-                DispatchQueue.main.async {
+                //DispatchQueue.main.async {
                     result?(.success(()))
-                }
+                //}
             } catch {
                 DispatchQueue.main.async {
                     result?(.failure(error))
                 }
             }
-        }
+       // }
     }
     
     public static func importDataSynchronously(from directory: URL, to canvas: Canvas, progress: ProgressHandler? = nil) throws {
@@ -77,9 +77,9 @@ open class DataImporter {
         canvas.data.elements = (content.lineStrips + content.chartlets).sorted(by: { $0.index < $1.index})
         reportProgress(1, on: progress)
 
-        DispatchQueue.main.async {
+        //DispatchQueue.main.async {
             /// redraw must be call on main thread
             canvas.redraw()
-        }
+        //}
     }
 }
